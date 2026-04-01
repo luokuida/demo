@@ -30,13 +30,13 @@ export default function Cart() {
   };
 
   return (
-    <div className="max-w-xl mx-auto px-6 py-8">
+    <div className="w-xl mx-auto px-6 py-8">
       <Link href="/" className="inline-flex items-center gap-1.5 text-[13px] text-gray-400 hover:text-gray-900 transition-colors mb-6">
         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         继续购物
       </Link>
 
-      <h1 className="text-[22px] font-medium mb-5">确认订单</h1>
+      <h1 className="text-[22px]  font-medium mb-5">确认订单</h1>
 
       {/* 商品列表 */}
       <div className="flex flex-col gap-2.5 mb-4">
