@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "iPhone 16",
+    "price": 5999,
+    "image": "https://picsum.photos/200/200",
+    "desc": "最新款苹果手机"
+  },
+  {
+    "id": 2,
+    "name": "MacBook Air",
+    "price": 7999,
+    "image": "https://picsum.photos/200/200",
+    "desc": "轻薄便携笔记本"
+  },
+  {
+    "id": 3,
+    "name": "AirPods Pro",
+    "price": 1899,
+    "image": "https://picsum.photos/200/200",
+    "desc": "主动降噪耳机"
+  }
+]
