@@ -1,7 +1,14 @@
 import AddCartButton from "./addCartButton";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { product } from "@prisma/client";
+
+interface Product {
+  id: string | number;
+  name: string;
+  price: number;
+  desc: string;
+  image: string;
+}
 
 export async function generateStaticParams() {
   const product = await prisma.product.findMany();
@@ -9,7 +16,7 @@ export async function generateStaticParams() {
 }
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = await params;
-  const currentproduct: product | null = await prisma.product.findUnique({
+  const currentproduct: Product | null = await prisma.product.findUnique({
     where: { id: Number(id) },
   });
   return { title: currentproduct?.name, description: currentproduct?.desc };
@@ -21,7 +28,7 @@ export default async function ProductDetail({
   params: { id: string };
 }) {
   const { id } = await params;
-  const currentproduct: product | null = await prisma.product.findUnique({
+  const currentproduct: Product | null = await prisma.product.findUnique({
     where: { id: Number(id) },
   });
   return (

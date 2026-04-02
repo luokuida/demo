@@ -50,7 +50,9 @@ export default function CardProvider({
   };
 
   return (
-    <CardContext value={{ count, total, items, addItem, clearCart }}>{children}</CardContext>
+    <CardContext.Provider value={{ count, total, items, addItem, clearCart }}>
+      {children}
+    </CardContext.Provider>
   );
 }
 
