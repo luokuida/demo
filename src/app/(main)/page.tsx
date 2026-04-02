@@ -1,5 +1,7 @@
-import product from "../product.json";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+
+const product = await prisma.product.findMany();
 
 interface Product {
   id: string | number;
@@ -14,16 +16,34 @@ const ProductCard = (item: Product) => {
     <Link href={`/product/${item.id}`}>
       <div className="flex items-center gap-4 bg-white border border-black/[0.06] rounded-xl p-4 cursor-pointer transition-all duration-150 hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-black/[0.12] active:scale-[0.99]">
         <div className="w-20 h-20 rounded-[10px] overflow-hidden bg-gray-100 flex-shrink-0">
-          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+          <img
+            src={item.image}
+            alt={item.name}
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[15px] font-medium text-gray-900 truncate mb-1">{item.name}</div>
-          <div className="text-[13px] text-gray-400 truncate mb-2">{item.desc}</div>
+          <div className="text-[15px] font-medium text-gray-900 truncate mb-1">
+            {item.name}
+          </div>
+          <div className="text-[13px] text-gray-400 truncate mb-2">
+            {item.desc}
+          </div>
           <div className="flex items-center justify-between">
-            <span className="text-[16px] font-medium tabular-nums">¥{item.price}</span>
+            <span className="text-[16px] font-medium tabular-nums">
+              ¥{item.price}
+            </span>
             <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-gray-900 transition-colors">
-              <svg className="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18l6-6-6-6"/>
+              <svg
+                className="w-3.5 h-3.5 text-gray-400"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 18l6-6-6-6" />
               </svg>
             </div>
           </div>
@@ -33,7 +53,8 @@ const ProductCard = (item: Product) => {
   );
 };
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <div className="max-w-xl mx-auto px-6 py-8">
       <h1 className="text-[22px] font-medium mb-6">全部商品</h1>

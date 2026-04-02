@@ -1,15 +1,18 @@
-import product from "../../../product.json";
 import AddCartButton from "./addCartButton";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { product } from "@prisma/client";
 
 export async function generateStaticParams() {
+  const product = await prisma.product.findMany();
   return product.map((item) => ({ id: item.id.toString() }));
 }
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = await params;
-  const currentproduct: any = product.find((item) => item.id.toString() === id);
-  return { title: currentproduct.name, description: currentproduct.desc };
+  const currentproduct: product | null = await prisma.product.findUnique({
+    where: { id: Number(id) },
+  });
+  return { title: currentproduct?.name, description: currentproduct?.desc };
 }
 
 export default async function ProductDetail({
@@ -18,10 +21,9 @@ export default async function ProductDetail({
   params: { id: string };
 }) {
   const { id } = await params;
-  const currentproduct: any = product.find((item) => item.id.toString() === id);
-  // if (!currentproduct) {
-  //   notFound();
-  // }
+  const currentproduct: product | null = await prisma.product.findUnique({
+    where: { id: Number(id) },
+  });
   return (
     <div className="max-w-xl mx-auto px-6 py-8">
       <Link
@@ -43,20 +45,20 @@ export default async function ProductDetail({
       </Link>
       <div className="w-full aspect-[4/3] rounded-[14px] overflow-hidden bg-gray-100 mb-6">
         <img
-          src={currentproduct.image}
-          alt={currentproduct.name}
+          src={currentproduct?.image}
+          alt={currentproduct?.name}
           className="w-full h-full object-cover"
         />
       </div>
       <div className="mb-6">
         <h1 className="text-[22px] font-medium mb-1.5">
-          {currentproduct.name}
+          {currentproduct?.name}
         </h1>
         <div className="text-[28px] font-medium tabular-nums mb-2.5">
-          ¥{currentproduct.price.toFixed(2)}
+          ¥{currentproduct?.price ? currentproduct.price.toFixed(2) : "0.00"}
         </div>
         <p className="text-[14px] text-gray-400 leading-relaxed">
-          {currentproduct.desc}
+          {currentproduct?.desc}
         </p>
       </div>
       <div className="h-px bg-black/[0.06] mb-6" />
