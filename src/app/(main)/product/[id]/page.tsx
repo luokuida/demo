@@ -12,7 +12,7 @@ interface Product {
 
 export async function generateStaticParams() {
   const product = await prisma.product.findMany();
-  return product.map((item) => ({ id: item.id.toString() }));
+  return product.map((item: Product) => ({ id: item.id.toString() }));
 }
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = await params;
