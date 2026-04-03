@@ -1,4 +1,7 @@
 import Link from "next/link";
+import AiChat from "../../components/aiChat";
+import AiChatButton from "../../components/aiChatButton";
+
 import { prisma } from "@/lib/prisma";
 
 const product = await prisma.product.findMany();
@@ -55,13 +58,16 @@ const ProductCard = (item: Product) => {
 
 export default async function Home() {
   return (
-    <div className="max-w-xl mx-auto px-6 py-8">
-      <h1 className="text-[22px] font-medium mb-6">全部商品</h1>
-      <div className="flex flex-col gap-3">
-        {product.map((item: Product) => (
-          <ProductCard key={item.id} {...item} />
-        ))}
+    <div>
+      <div className="max-w-xl mx-auto px-6 py-8">
+        <h1 className="text-[22px] font-medium mb-6">全部商品</h1>
+        <div className="flex flex-col gap-3">
+          {product.map((item: Product) => (
+            <ProductCard key={item.id} {...item} />
+          ))}
+        </div>
       </div>
+      <AiChatButton />
     </div>
   );
 }
